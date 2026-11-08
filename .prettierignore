@@ -1,0 +1,6 @@
+dist/vendor/
+dist/_worker.js
+node_modules/
+work/
+.sites-runtime/
+.openai/

@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta name="theme-color" content="#ffffff" />
+    <title>Honey Scholar | Free PDF Worksheet Quiz &amp; Practice</title>
+    <meta
+      name="description"
+      content="Practise multiple-choice and fill-in-the-blank questions from your PDF worksheets. A study tool by Siddharth Saju."
+    />
+    <link rel="canonical" href="https://honeyscholar.pages.dev/" />
+    <meta
+      property="og:title"
+      content="Honey Scholar — PDF worksheet practice"
+    />
+    <meta
+      property="og:description"
+      content="Turn PDF worksheets into multiple-choice and fill-in-the-blank practice. Study one question at a time, check answers and track your progress. Free to use, with optional accounts."
+    />
+    <meta property="og:url" content="https://honeyscholar.pages.dev/" />
+    <meta property="og:type" content="website" />
+    <link rel="icon" href="./images/study-pooh.png" type="image/png" />
+    <link rel="stylesheet" href="./style.css" />
+  </head>
+  <body>
+    <header>
+      <a href="#" id="brand" class="brand">Honey Scholar.</a>
+      <nav aria-label="Main navigation">
+        <button id="new-link" class="nav-link">Study desk</button
+        ><button id="how-link" class="nav-link">How it works</button>
+      </nav>
+    </header>
+    <main id="app">
+      <section class="workspace">
+        <h1>A proper study session.</h1>
+        <p>
+          Practise multiple-choice and fill-in-the-blank questions from your PDF
+          worksheets, one question at a time.
+        </p>
+        <p>
+          Use an answer key, set an optional timer and review your results.
+          Study without an account, or sign in to save selected tests and track
+          first-attempt progress.
+        </p>
+        <noscript
+          ><p>
+            Enable JavaScript to open the worksheet practice tool. PDFs are read
+            on your device.
+          </p></noscript
+        >
+      </section>
+    </main>
+    <footer>
+      <span>Made for studying, by a student.</span
+      ><button id="about-link" class="text-btn">About the creator</button>
+    </footer>
+    <div id="toast" role="status" aria-live="polite"></div>
+    <dialog id="modal"><div id="modal-body"></div></dialog>
+    <script type="module" src="./app.mjs"></script>
+  </body>
+</html>
