@@ -56,3 +56,67 @@ test("unknown answers and an empty quiz never celebrate", () => {
   );
   assert.equal(result([], {}, {}).celebrate, false);
 });
+
+test("explicit headings preserve subquestions, wrapped code and four choices", () => {
+  const qs = parseWorksheet(
+    `Question 1 | 2 points
+What is the value?
+a. Consider the first expression.
+b. Consider the second expression.
+Book b = new Book("A. Writer", 200);
+A. a. 7, b. 10
+B. a. 7, b. 7
+C. a. 4, b. 3
+D. a. 3, b. 4
+Answer: ______
+Course footer 2
+Question 2 | 2 points
+Identify the constructor.
+A. Book("A. Writer",
+200) = constructor call.
+B. Other
+C. Third
+D. Fourth
+Answer: ______`,
+    parseKey("1. A\n2. A"),
+  );
+  assert.equal(qs.length, 2);
+  assert.deepEqual(
+    qs.map((q) => q.number),
+    ["1", "2"],
+  );
+  assert.deepEqual(qs[0].options, [
+    "a. 7, b. 10",
+    "a. 7, b. 7",
+    "a. 4, b. 3",
+    "a. 3, b. 4",
+  ]);
+  assert.ok(qs[0].prompt.includes('\nBook b = new Book("A. Writer", 200);'));
+  assert.ok(qs[0].prompt.includes("a. Consider"));
+  assert.equal(qs[1].options[0], 'Book("A. Writer", 200) = constructor call.');
+  assert.ok(!JSON.stringify(qs).includes("Course footer"));
+});
+
+test("lowercase choices and bare Question headings remain supported", () => {
+  const qs = parseWorksheet(
+    "Question 1\nChoose a fruit.\na. Apple\nb. Stone\nQuestion 2\nFill ____.",
+  );
+  assert.deepEqual(qs[0].options, ["Apple", "Stone"]);
+  assert.equal(qs[1].type, "blank");
+});
+
+test("PDF text fragments retain original spaces inside strings", async () => {
+  const { pdfTextRows } = await import("../dist/engine.mjs");
+  const pieces = [
+    ['"London', 0, 7],
+    [" ", 7, 1],
+    ['UK";', 8, 4],
+    ["next", 0, 4, 20],
+    ["word", 6, 4, 20],
+  ].map(([str, x, width, y = 30]) => ({
+    str,
+    width,
+    transform: [1, 0, 0, 1, x, y],
+  }));
+  assert.equal(pdfTextRows(pieces), '"London UK";\nnext word');
+});
