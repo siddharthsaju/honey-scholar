@@ -2,7 +2,7 @@
 
 [Try the website](https://honeyscholar.pages.dev/)
 
-A worksheet practice app by Siddharth Saju, a first-year University of Birmingham student. Upload a text-based PDF, check its extracted questions and practise one question at a time.
+A worksheet practice app by me :), a first-year University of Birmingham student. Upload a text-based PDF, check its extracted questions and practise one question at a time.
 
 ## Features
 
@@ -73,8 +73,8 @@ Saved submitted answers and completed results are locked. Repeated question sets
 
 ## Limitations
 
-Text-based PDFs only, up to 20 MB and 100 pages. Scanned worksheets, diagrams and complex layouts may need manual transcription. Extraction must be reviewed before practice. Questions without answer keys are ungraded. Unknown AI answers should be checked against course material.
+The moon.
 
 ## Third-party assets
 
-PDF.js 4.10.38 is distributed under Apache-2.0; its licence is included in `dist/vendor/LICENSE`. Google Fonts use system fallbacks. The creator portrait and supplied Pooh meme are included as website assets; third-party characters and artwork are not claimed as original work or covered by a new licence in this repository.
+PDF.js 4.10.38 is distributed under Apache-2.0; its licence is included in `dist/vendor/LICENSE`. Third-party characters and artwork are not claimed as original work or covered by a new licence in this repository.
