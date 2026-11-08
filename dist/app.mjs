@@ -1,6 +1,7 @@
 import { setupAccounts, savePrompt } from "./accounts.mjs";
 import {
   parseWorksheet,
+  pdfTextRows,
   parseKey,
   normalize,
   isCorrect,
@@ -239,26 +240,7 @@ async function readPdf(file, isKey) {
     for (let n = 1; n <= doc.numPages; n++) {
       const page = await doc.getPage(n);
       const content = await page.getTextContent();
-      const rows = [];
-      let row = "",
-        lastY = null;
-      for (const item of content.items) {
-        if (!("str" in item)) continue;
-        const y = Math.round(item.transform[5]);
-        if (lastY !== null && Math.abs(y - lastY) > 3 && row) {
-          rows.push(row);
-          row = "";
-        }
-        row += (row ? " " : "") + item.str;
-        lastY = y;
-        if (item.hasEOL) {
-          rows.push(row);
-          row = "";
-          lastY = null;
-        }
-      }
-      if (row) rows.push(row);
-      extracted.push(rows.join("\n"));
+      extracted.push(pdfTextRows(content.items));
       page.cleanup();
     }
     if (!extracted.join("").trim())

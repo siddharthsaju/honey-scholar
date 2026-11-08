@@ -1312,3 +1312,8 @@ dialog .actions {
     font-size: 40px;
   }
 }
+
+.question h3,
+.review-item h3 {
+  white-space: pre-wrap;
+}
