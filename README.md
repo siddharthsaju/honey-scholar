@@ -15,6 +15,10 @@ A worksheet practice app by me :), a first-year University of Birmingham student
 - Account export and deletion, plus a limited admin overview.
 - An optional external AI prompt helper. It does not make paid AI API calls.
 
+## Usability update
+
+The study desk includes a working sample quiz, a collapsible mobile menu, readable form controls and keyboard focus, five practical FAQs, view-specific browser titles and a custom missing-page screen. Privacy/storage and study guidelines are available as standalone pages. No advertising trackers, fabricated reviews or paid tiers were added.
+
 ## Run locally
 
 Use Node.js 24 and Python 3:
@@ -73,7 +77,7 @@ Saved submitted answers and completed results are locked. Repeated question sets
 
 ## Limitations
 
-The moon.
+Text-based PDFs only, up to 20 MB and 100 pages. Scans, diagrams and complex layouts may need manual transcription. Review extracted questions and answer keys before starting. Questions without keys are ungraded; verify AI-generated answers against course material.
 
 ## Third-party assets
 
