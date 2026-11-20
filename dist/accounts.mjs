@@ -97,11 +97,6 @@ export function setupAccounts(callbacks) {
   button.textContent = "My progress";
   button.onclick = () => openAccount();
   $("nav").append(button);
-  const privacy = document.createElement("button");
-  privacy.className = "text-btn tiny";
-  privacy.textContent = "Privacy";
-  privacy.onclick = showPrivacy;
-  $("footer").append(privacy);
 }
 export function showPrivacy() {
   modal(

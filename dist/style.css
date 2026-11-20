@@ -17,7 +17,7 @@ body {
   margin: 0;
   background: var(--paper);
   color: var(--ink);
-  font: 14px/1.6 var(--sans);
+  font: 16px/1.6 var(--sans);
 }
 button,
 input,
@@ -99,7 +99,7 @@ nav {
   border: 0;
   background: none;
   padding: 10px 0;
-  font-size: 12px;
+  font-size: 14px;
 }
 .nav-link:hover {
   border-bottom: 1px solid currentColor;
@@ -119,7 +119,7 @@ footer {
   align-items: center;
   padding: 24px 0;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 14px;
 }
 .hero {
   display: grid;
@@ -134,7 +134,7 @@ footer {
   margin-bottom: 20px;
 }
 .lead {
-  font-size: 14px;
+  font-size: 16px;
   color: #5a5a55;
   line-height: 1.8;
 }
@@ -167,11 +167,11 @@ footer {
   margin-top: 8px !important;
 }
 .tiny {
-  font-size: 11px;
+  font-size: 14px;
   color: var(--muted);
 }
 .number-label {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 600;
   line-height: 1.4;
   margin-bottom: 12px;
@@ -211,13 +211,13 @@ footer {
   font-weight: 400;
 }
 .drop p {
-  font-size: 11px;
+  font-size: 14px;
   color: var(--muted);
   margin-top: 2px;
 }
 .drop small {
   display: block;
-  font-size: 9px;
+  font-size: 14px;
   color: var(--muted);
   margin-top: 12px;
   letter-spacing: 0.4px;
@@ -238,7 +238,7 @@ footer {
   gap: 16px;
 }
 .toggle-label {
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   display: block;
 }
@@ -291,7 +291,7 @@ footer {
   padding-top: 12px;
 }
 .key-options label {
-  font-size: 11px;
+  font-size: 14px;
 }
 .small-input {
   width: 58px !important;
@@ -300,7 +300,7 @@ footer {
 }
 .key-file {
   display: block;
-  font-size: 11px;
+  font-size: 14px;
   width: 100%;
   padding: 10px;
   border: 1px solid var(--line);
@@ -318,7 +318,7 @@ footer {
   background: none;
   padding: 8px 0;
   color: var(--muted);
-  font-size: 11px;
+  font-size: 14px;
 }
 .segmented button.active {
   color: var(--ink);
@@ -359,7 +359,7 @@ footer {
   justify-content: center;
   gap: 14px;
   text-decoration: none;
-  font-size: 12px;
+  font-size: 14px;
   font-weight: 400;
   border-radius: 0;
 }
@@ -377,7 +377,7 @@ footer {
 .btn.small {
   min-height: 33px;
   padding: 7px 12px;
-  font-size: 11px;
+  font-size: 14px;
 }
 .full {
   width: 100%;
@@ -385,7 +385,7 @@ footer {
   justify-content: space-between;
 }
 .privacy {
-  font-size: 10px;
+  font-size: 14px;
   color: var(--muted);
   text-align: center;
   margin-top: 11px;
@@ -396,7 +396,7 @@ footer {
   gap: 7px;
   align-items: center;
   margin-top: 24px;
-  font-size: 11px;
+  font-size: 14px;
   color: var(--muted);
 }
 .text-btn {
@@ -429,13 +429,13 @@ footer {
   padding: 15px 0;
   border-bottom: 1px solid var(--line);
   margin-bottom: 35px;
-  font-size: 12px;
+  font-size: 14px;
 }
 .notice {
   border-left: 2px solid #9b8c6a;
   background: #f6f5f0;
   padding: 12px 15px;
-  font-size: 12px;
+  font-size: 14px;
   line-height: 1.7;
   margin: 16px 0;
 }
@@ -449,7 +449,7 @@ footer {
   background: #f2f5ee;
 }
 .loading {
-  font-size: 12px;
+  font-size: 14px;
   display: flex;
   align-items: center;
   gap: 9px;
@@ -486,7 +486,7 @@ footer {
   margin: 0 0 10px;
 }
 .page-heading p {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted);
 }
 .card {
@@ -502,7 +502,7 @@ footer {
 }
 .field {
   display: block;
-  font-size: 12px;
+  font-size: 14px;
 }
 .field input,
 .field textarea,
@@ -520,7 +520,7 @@ select {
   border: 1px solid #bcbeb6;
   background: #fff;
   color: var(--ink);
-  font-size: 13px;
+  font-size: 14px;
   padding: 10px 12px;
   line-height: 1.5;
   margin-top: 7px;
@@ -547,10 +547,10 @@ input[type="checkbox"] {
   color: #8a3930;
   border: 0;
   background: none;
-  font-size: 11px;
+  font-size: 14px;
 }
 .source {
-  font-size: 10px;
+  font-size: 14px;
   color: var(--muted);
 }
 .editor-bottom {
@@ -582,10 +582,10 @@ input[type="checkbox"] {
   z-index: 2;
 }
 .sticky-bar p {
-  font-size: 11px;
+  font-size: 14px;
 }
 .wide-note {
-  font-size: 11px;
+  font-size: 14px;
   line-height: 1.7;
   color: var(--muted);
   margin-top: 20px;
@@ -615,7 +615,7 @@ input[type="checkbox"] {
 .progress-label {
   display: flex;
   justify-content: space-between;
-  font-size: 10px;
+  font-size: 14px;
   color: var(--muted);
   letter-spacing: 0.4px;
 }
@@ -637,7 +637,7 @@ input[type="checkbox"] {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-size: 10px;
+  font-size: 14px;
   color: var(--muted);
   margin-bottom: 18px;
   letter-spacing: 0.5px;
@@ -680,7 +680,7 @@ input[type="checkbox"] {
 .letter {
   display: inline-grid;
   place-items: center;
-  font-size: 12px;
+  font-size: 14px;
   width: 28px;
   height: 28px;
   border: 1px solid #c3c7bc;
@@ -696,7 +696,7 @@ input[type="checkbox"] {
   background: #f4f4ed;
   margin-top: 22px;
   padding: 15px 18px;
-  font-size: 12px;
+  font-size: 14px;
 }
 .feedback.right {
   border-color: #6b805d;
@@ -744,7 +744,7 @@ input[type="checkbox"] {
   background: white;
   width: 30px;
   height: 30px;
-  font-size: 11px;
+  font-size: 14px;
 }
 .q-dot.done {
   background: #e8ecdf;
@@ -781,7 +781,7 @@ input[type="checkbox"] {
   letter-spacing: 0;
 }
 .score-label {
-  font-size: 10px;
+  font-size: 14px;
   color: var(--muted);
   margin-top: 11px;
   letter-spacing: 0.8px;
@@ -791,14 +791,14 @@ input[type="checkbox"] {
   margin-bottom: 12px;
 }
 .results p {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted);
 }
 .result-details {
   display: flex;
   gap: 18px;
   margin: 18px 0 0;
-  font-size: 11px;
+  font-size: 14px;
 }
 .review-item {
   padding: 23px 0;
@@ -817,17 +817,17 @@ input[type="checkbox"] {
   grid-template-columns: 1fr 1fr;
   gap: 24px;
   margin: 18px 0;
-  font-size: 13px;
+  font-size: 14px;
 }
 .answer-comparison small {
   display: block;
-  font-size: 9px;
+  font-size: 14px;
   letter-spacing: 0.5px;
   color: var(--muted);
   margin-bottom: 6px;
 }
 .review-badge {
-  font-size: 10px;
+  font-size: 14px;
   color: #45603b;
   padding: 2px 0;
 }
@@ -867,10 +867,10 @@ input[type="checkbox"] {
 }
 .creator-name {
   font-weight: 600;
-  font-size: 13px;
+  font-size: 14px;
 }
 .creator-detail {
-  font-size: 12px;
+  font-size: 14px;
   color: var(--muted);
   margin-top: 4px;
 }
@@ -898,7 +898,7 @@ dialog h2 {
   margin-bottom: 16px;
 }
 dialog p {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--muted);
   margin-bottom: 14px;
 }
@@ -908,7 +908,7 @@ dialog .actions {
 }
 .instructions {
   padding-left: 19px;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.9;
 }
 #toast {
@@ -921,7 +921,7 @@ dialog .actions {
   max-width: 90vw;
   padding: 12px 20px;
   opacity: 0;
-  font-size: 12px;
+  font-size: 14px;
   text-align: center;
   z-index: 15;
   transition: 0.15s;
@@ -1013,7 +1013,7 @@ dialog .actions {
     gap: 16px;
   }
   .nav-link {
-    font-size: 11px;
+    font-size: 14px;
   }
   #new-link {
     display: none;
@@ -1038,7 +1038,7 @@ dialog .actions {
     margin: 0;
   }
   .lead {
-    font-size: 12px;
+    font-size: 14px;
     grid-column: 1;
     grid-row: 2;
     line-height: 1.6;
@@ -1096,13 +1096,13 @@ dialog .actions {
     flex-wrap: wrap;
   }
   .question-footer > .tiny {
-    font-size: 10px;
+    font-size: 14px;
   }
   .sticky-bar {
     gap: 12px;
   }
   .sticky-bar p {
-    font-size: 10px;
+    font-size: 14px;
     max-width: 125px;
   }
   .btn {
@@ -1152,10 +1152,10 @@ dialog .actions {
   }
   .resume {
     align-items: start;
-    font-size: 11px;
+    font-size: 14px;
   }
   footer {
-    font-size: 10px;
+    font-size: 14px;
     padding: 20px 0;
     gap: 15px;
   }
@@ -1190,7 +1190,7 @@ dialog .actions {
 }
 .stat-row span {
   display: block;
-  font-size: 13px;
+  font-size: 14px;
   color: #62645e;
   margin-top: 8px;
 }
@@ -1254,7 +1254,7 @@ dialog .actions {
 }
 .consent {
   display: block;
-  font-size: 13px;
+  font-size: 14px;
   line-height: 1.6;
   margin: 20px 0;
 }
@@ -1316,4 +1316,163 @@ dialog .actions {
 .question h3,
 .review-item h3 {
   white-space: pre-wrap;
+}
+
+/* Study controls stay readable and usable on small screens. */
+.skip-link {
+  position: fixed;
+  top: 8px;
+  left: 12px;
+  z-index: 100;
+  padding: 10px 16px;
+  background: var(--ink);
+  color: white;
+  transform: translateY(-160%);
+}
+.skip-link:focus {
+  transform: translateY(0);
+}
+#app:focus {
+  outline: none;
+}
+.menu-toggle {
+  display: none;
+}
+header {
+  position: relative;
+}
+button,
+.btn,
+summary,
+footer a {
+  touch-action: manipulation;
+}
+.btn,
+.nav-link,
+.text-btn {
+  min-height: 44px;
+}
+input:not([type="checkbox"]):not([type="radio"]):not([type="file"]),
+textarea,
+select {
+  font-size: 16px;
+}
+.hero > *,
+.fields > *,
+.question,
+.saved-test > * {
+  min-width: 0;
+}
+.question,
+.saved-test,
+.resume,
+.notice {
+  overflow-wrap: anywhere;
+}
+footer {
+  flex-wrap: wrap;
+  column-gap: 24px;
+  row-gap: 4px;
+}
+footer a {
+  display: inline-flex;
+  align-items: center;
+}
+.sample-shortcut {
+  margin-top: 20px;
+}
+.study-help {
+  margin-top: 64px;
+  border-top: 1px solid var(--ink);
+  padding-top: 28px;
+  max-width: 800px;
+}
+.study-help > p {
+  margin: 12px 0 24px;
+}
+.study-help details {
+  border-bottom: 1px solid var(--line);
+}
+.study-help summary {
+  padding: 18px 0;
+  cursor: pointer;
+  font-weight: 600;
+}
+.study-help details p {
+  padding: 0 0 20px;
+  max-width: 70ch;
+}
+.study-help a,
+.document-page a {
+  text-underline-offset: 4px;
+}
+.document-page {
+  max-width: 760px;
+}
+.document-page h1 {
+  margin: 20px 0;
+}
+.document-page h2 {
+  margin: 32px 0 12px;
+}
+.document-page p,
+.document-page ul {
+  margin: 14px 0;
+}
+.document-page {
+  overflow-wrap: anywhere;
+}
+@media (max-width: 700px) {
+  header {
+    flex-wrap: wrap;
+    height: auto;
+    min-height: 76px;
+    padding: 14px 0;
+  }
+  .menu-toggle {
+    display: inline-block;
+  }
+  #main-nav {
+    display: none;
+    width: 100%;
+    padding: 12px 0 0;
+    gap: 8px 20px;
+    flex-wrap: wrap;
+  }
+  #main-nav.is-open {
+    display: flex;
+  }
+  #new-link {
+    display: inline-block;
+  }
+  .intro .sample-shortcut {
+    grid-column: 1 / -1;
+    justify-self: start;
+    margin-top: 0;
+  }
+  .intro {
+    grid-template-columns: minmax(0, 1fr) 100px;
+    gap: 12px;
+  }
+  .intro h1 {
+    font-size: clamp(28px, 7vw, 35px);
+  }
+  .intro .lead {
+    font-size: 16px;
+  }
+  .study-help {
+    margin-top: 40px;
+  }
+  .sticky-bar {
+    flex-wrap: wrap;
+  }
+  .sticky-bar p {
+    max-width: none;
+  }
+  #topics-form {
+    flex-wrap: wrap;
+  }
+  #topics-form .field {
+    flex-basis: 100%;
+  }
 }

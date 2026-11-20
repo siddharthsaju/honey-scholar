@@ -12,7 +12,7 @@
     <link rel="canonical" href="https://honeyscholar.pages.dev/" />
     <meta
       property="og:title"
-      content="Honey Scholar — PDF worksheet practice"
+      content="Honey Scholar | PDF worksheet practice"
     />
     <meta
       property="og:description"
@@ -20,18 +20,40 @@
     />
     <meta property="og:url" content="https://honeyscholar.pages.dev/" />
     <meta property="og:type" content="website" />
-    <link rel="icon" href="./images/study-pooh.png" type="image/png" />
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <meta
+      property="og:image"
+      content="https://honeyscholar.pages.dev/images/social-preview.png"
+    />
+    <meta
+      property="og:image:alt"
+      content="Honey Scholar: your worksheet, one question at a time"
+    />
+    <meta name="twitter:card" content="summary_large_image" />
     <link rel="stylesheet" href="./style.css" />
+    <meta
+      name="google-site-verification"
+      content="Sqkq-DyJ082U0oWKP5QeDz7wwqpDR69UX3ed_sJ0vZQ"
+    />
   </head>
   <body>
+    <a class="skip-link" href="#app">Skip to study desk</a>
     <header>
       <a href="#" id="brand" class="brand">Honey Scholar.</a>
-      <nav aria-label="Main navigation">
+      <button
+        id="menu-toggle"
+        class="nav-link menu-toggle"
+        aria-expanded="false"
+        aria-controls="main-nav"
+      >
+        Menu
+      </button>
+      <nav id="main-nav" aria-label="Main navigation">
         <button id="new-link" class="nav-link">Study desk</button
         ><button id="how-link" class="nav-link">How it works</button>
       </nav>
     </header>
-    <main id="app">
+    <main id="app" tabindex="-1">
       <section class="workspace">
         <h1>A proper study session.</h1>
         <p>
@@ -52,11 +74,20 @@
       </section>
     </main>
     <footer>
-      <span>Made for studying, by a student.</span
+      <span
+        >Made for studying, by a student.
+        <span id="copyright-year">2026</span> Siddharth Saju.</span
       ><button id="about-link" class="text-btn">About the creator</button>
+      <a href="./privacy.html">Privacy &amp; storage</a
+      ><a href="./terms.html">Study guidelines</a
+      ><a href="https://github.com/siddharthsaju/honey-scholar/issues"
+        >Report a problem</a
+      >
     </footer>
     <div id="toast" role="status" aria-live="polite"></div>
-    <dialog id="modal"><div id="modal-body"></div></dialog>
+    <dialog id="modal" aria-label="Study desk dialog">
+      <div id="modal-body"></div>
+    </dialog>
     <script type="module" src="./app.mjs"></script>
   </body>
 </html>

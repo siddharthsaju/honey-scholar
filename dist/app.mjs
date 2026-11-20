@@ -66,13 +66,20 @@ function toast(msg) {
   toastTimer = setTimeout(() => $("#toast").classList.remove("show"), 4200);
 }
 function showModal(html) {
+  if (modal.open) modal.close();
   $("#modal-body").innerHTML = html;
+  const heading = $("#modal-body h2");
+  if (heading) {
+    heading.id = "dialog-title";
+    modal.setAttribute("aria-labelledby", heading.id);
+  }
   modal.showModal();
   $("#modal-close")?.addEventListener("click", () => modal.close());
 }
 function navigate(view) {
   state.view = view;
   render();
+  app.focus({ preventScroll: true });
   window.scrollTo({ top: 0, behavior: "instant" });
 }
 function reset() {
@@ -131,6 +138,15 @@ $("#how-link").onclick = () =>
     `<div class="eyebrow">A small guide</div><h2 style="margin-top:14px">Good practice, without the fuss.</h2><ol class="instructions"><li>Choose a text-based PDF with numbered questions and lettered options.</li><li>Use its answer pages, upload a separate answer PDF, or add answers yourself.</li><li>Check the extracted questions and answers before starting.</li><li>Submit each answer to reveal the key. Submitted answers are locked for this attempt.</li></ol><div class="actions"><button id="modal-close" class="btn">Rather splendid</button></div>`,
   );
 function render() {
+  const titles = {
+    home: "PDF worksheet practice",
+    editor: "Check your worksheet",
+    quiz: "Practice session",
+    review: "Your results",
+    about: "About Siddharth",
+    dashboard: "Your progress",
+  };
+  document.title = `${titles[state.view] || "Study desk"} | Honey Scholar`;
   if (state.view === "dashboard") return;
   if (state.view === "about") {
     about();
@@ -141,8 +157,18 @@ function render() {
   else if (state.view === "quiz") quiz();
   else review();
 }
+function helpSection() {
+  return `<section class="study-help" aria-labelledby="help-title"><h2 id="help-title">Before you begin.</h2><p>Start with the sample, or bring a worksheet you are allowed to use.</p>
+  <details><summary>Which PDFs work?</summary><p>Text-based PDFs with numbered questions, up to 20 MB and 100 pages. Multiple-choice and fill-in-the-blank questions work best. Scans, diagrams and complicated layouts may need manual transcription. Review the extracted text before starting.</p></details>
+  <details><summary>Do I need an answer key?</summary><p>Use answer pages at the end of your worksheet, upload a separate key, or enter answers yourself. Questions without a key stay ungraded. If you ask an external AI assistant for answers, check them against your course material.</p></details>
+  <details><summary>Is it free? Do I need an account?</summary><p>Worksheet practice is free and works without an account. Sign in only if you want to save selected tests and track progress. The app makes no paid AI API calls.</p></details>
+  <details><summary>Where do my files and answers go?</summary><p>Your original PDF is processed on your device. A guest session is kept in this browser tab. Signing in does not automatically upload a worksheet: you choose which tests to save. See <a href="./privacy.html">privacy and storage</a> for the details.</p></details>
+  <details><summary>Can I change an answer or retake a quiz?</summary><p>Submitting locks that answer for the attempt. Finishing locks the result. You can practise again, but retakes do not replace the initial score or count towards its average.</p></details>
+  <p class="help-contact">Something not working? <a href="https://github.com/siddharthsaju/honey-scholar/issues">Report a problem on GitHub</a>. Please leave private worksheets, passwords and account tokens out of public reports.</p></section>`;
+}
 function home() {
-  app.innerHTML = `${saved ? `<div class="resume"><span><strong>Welcome back.</strong> Your “${esc(saved.title)}” session is waiting in this tab.</span><div class="actions"><button class="btn small" id="resume">Resume</button><button class="text-btn" id="discard">Clear</button></div></div>` : ""}<div class="hero"><section class="intro"><h1>A proper<br>study session.</h1><p class="lead">Your PDF worksheet. One question at a time.</p><figure class="study-figure"><img src="./images/study-pooh.png" alt="The original tuxedo Winnie-the-Pooh meme, seated in an armchair" width="640" height="566"><figcaption>Taking revision very seriously.</figcaption></figure></section><section class="upload-card" aria-label="Create a practice session"><div class="card-head"><div><h2>Start a session.</h2><p class="tiny" style="margin-top:5px">Multiple choice and fill in the blanks.</p></div></div><div class="number-label">Worksheet</div><label class="drop" id="drop"><input id="pdf" type="file" accept=".pdf,application/pdf" ${busy ? "disabled" : ""} aria-label="Upload worksheet PDF"><span><span class="upload-icon">↑</span><strong>${esc(pdfName) || "Drop your PDF here"}</strong><p>${pages.length ? `${pages.length} pages ready · Click to replace` : "or click to browse your files"}</p><small>TEXT-BASED PDF · UP TO 20 MB / 100 PAGES</small></span></label>${busy ? '<div class="loading" role="status">Reading the pages, right here on your device…</div>' : ""}${uploadError ? `<div class="notice error" role="alert">${esc(uploadError)}</div>` : ""}<div class="setup-step"><div class="number-label">Answer key</div><div class="toggle-row"><span><label for="has-key" class="toggle-label">Does your worksheet have an answer page?</label><span class="tiny">Use the answers at the end of the PDF.</span></span><label class="switch"><input id="has-key" type="checkbox" ${hasKey ? "checked" : ""}><span></span></label></div><div class="key-options">${hasKey ? `<label>Answer pages start at page <input class="small-input" id="key-start" type="number" min="1" max="${pages.length || 100}" value="${startPage}" aria-label="First answer page">${pages.length ? `of ${pages.length}` : ""}</label><p class="tiny" style="margin-top:7px">This page and every page after it become the answer key.</p>` : `<div class="segmented" role="group" aria-label="Answer source"><button data-mode="upload" class="${answerMode === "upload" ? "active" : ""}">Upload a key</button><button data-mode="manual" class="${answerMode === "manual" ? "active" : ""}">Add answers</button><button data-mode="chatgpt" class="${answerMode === "chatgpt" ? "active" : ""}">Ask AI</button></div>${answerMode === "upload" ? `<input class="key-file" id="key-pdf" type="file" accept=".pdf,application/pdf" aria-label="Upload separate answer key PDF"><p class="tiny">${esc(keyName) || "Choose a separate answer-sheet PDF."}</p>` : answerMode === "manual" ? '<p class="tiny" style="margin-top:9px">Type the correct answers in the next step, or leave them ungraded.</p>' : '<p class="tiny" style="margin-top:9px">Copy a prompt in the next step, ask ChatGPT, then paste its answer key. <strong>AI can be wrong. Use at your own risk.</strong> No API charges.</p>'}`}</div></div>${timerSettings()}<button id="prepare" class="btn full" ${busy ? "disabled" : ""}><span>Prepare my practice</span><span>→</span></button><p class="privacy">Files are read on your device. No API charges.</p><div class="demo-row">No worksheet to hand? <button class="text-btn" id="demo">Try a sample quiz</button></div><div style="text-align:center;margin-top:10px"><button class="text-btn tiny" id="paste-entry">Paste worksheet text instead</button> <span class="tiny">·</span> <button class="text-btn tiny" id="import-session">Open saved quiz</button><input id="session-file" type="file" accept=".json" hidden></div></section></div>`;
+  app.innerHTML = `${saved ? `<div class="resume"><span><strong>Welcome back.</strong> Your “${esc(saved.title)}” session is waiting in this tab.</span><div class="actions"><button class="btn small" id="resume">Resume</button><button class="text-btn" id="discard">Clear</button></div></div>` : ""}<div class="hero"><section class="intro"><h1>A proper<br>study session.</h1><p class="lead">Your PDF worksheet. One question at a time.</p><button class="btn secondary sample-shortcut" id="sample-shortcut">Try the sample quiz</button><figure class="study-figure"><img src="./images/study-pooh.png" alt="The original tuxedo Winnie-the-Pooh meme, seated in an armchair" width="640" height="566"><figcaption>Taking revision very seriously.</figcaption></figure></section><section class="upload-card" aria-label="Create a practice session"><div class="card-head"><div><h2>Start a session.</h2><p class="tiny" style="margin-top:5px">Multiple choice and fill in the blanks.</p></div></div><div class="number-label">Worksheet</div><label class="drop" id="drop"><input id="pdf" type="file" accept=".pdf,application/pdf" ${busy ? "disabled" : ""} aria-label="Upload worksheet PDF"><span><span class="upload-icon">↑</span><strong>${esc(pdfName) || "Drop your PDF here"}</strong><p>${pages.length ? `${pages.length} pages ready · Click to replace` : "or click to browse your files"}</p><small>TEXT-BASED PDF · UP TO 20 MB / 100 PAGES</small></span></label>${busy ? '<div class="loading" role="status">Reading the pages, right here on your device…</div>' : ""}${uploadError ? `<div class="notice error" role="alert">${esc(uploadError)}</div>` : ""}<div class="setup-step"><div class="number-label">Answer key</div><div class="toggle-row"><span><label for="has-key" class="toggle-label">Does your worksheet have an answer page?</label><span class="tiny">Use the answers at the end of the PDF.</span></span><label class="switch"><input id="has-key" type="checkbox" ${hasKey ? "checked" : ""}><span></span></label></div><div class="key-options">${hasKey ? `<label>Answer pages start at page <input class="small-input" id="key-start" type="number" min="1" max="${pages.length || 100}" value="${startPage}" aria-label="First answer page">${pages.length ? `of ${pages.length}` : ""}</label><p class="tiny" style="margin-top:7px">This page and every page after it become the answer key.</p>` : `<div class="segmented" role="group" aria-label="Answer source"><button data-mode="upload" class="${answerMode === "upload" ? "active" : ""}">Upload a key</button><button data-mode="manual" class="${answerMode === "manual" ? "active" : ""}">Add answers</button><button data-mode="chatgpt" class="${answerMode === "chatgpt" ? "active" : ""}">Ask AI</button></div>${answerMode === "upload" ? `<input class="key-file" id="key-pdf" type="file" accept=".pdf,application/pdf" aria-label="Upload separate answer key PDF"><p class="tiny">${esc(keyName) || "Choose a separate answer-sheet PDF."}</p>` : answerMode === "manual" ? '<p class="tiny" style="margin-top:9px">Type the correct answers in the next step, or leave them ungraded.</p>' : '<p class="tiny" style="margin-top:9px">Copy a prompt in the next step, ask ChatGPT, then paste its answer key. <strong>AI can be wrong. Use at your own risk.</strong> No API charges.</p>'}`}</div></div>${timerSettings()}<button id="prepare" class="btn full" ${busy ? "disabled" : ""}><span>Prepare my practice</span></button><p class="privacy">Files are read on your device. No API charges.</p><div class="demo-row">No worksheet to hand? <button class="text-btn" id="demo">Try a sample quiz</button></div><div style="text-align:center;margin-top:10px"><button class="text-btn tiny" id="paste-entry">Paste worksheet text instead</button> <span class="tiny">·</span> <button class="text-btn tiny" id="import-session">Open saved quiz</button><input id="session-file" type="file" accept=".json" hidden></div></section></div>${helpSection()}`;
+  $("#sample-shortcut").onclick = () => $("#demo").click();
   $("#resume")?.addEventListener("click", () => {
     state = structuredClone(saved);
     navigate(
@@ -905,7 +931,7 @@ function updateTimer() {
   if (!remaining) completeAttempt(true);
 }
 function about() {
-  app.innerHTML = `<section class="creator-page"><button id="about-back" class="text-btn tiny">← Back to studying</button><div class="creator-card"><div class="creator-photo"><img src="./images/siddharth-saju.png" alt="Siddharth Saju" width="1254" height="1254"></div><h1>Hi, I’m Siddharth.</h1><p class="creator-name">Siddharth Saju</p><p class="creator-detail">First-year student · University of Birmingham</p><blockquote>“Hope you liked my website. I’d been searching for a website to do this, and ended up making one myself.”</blockquote><span class="creator-signature">Happy studying,<br>Siddharth</span></div></section>`;
+  app.innerHTML = `<section class="creator-page"><button id="about-back" class="text-btn tiny">Back to studying</button><div class="creator-card"><div class="creator-photo"><img src="./images/siddharth-saju.png" loading="lazy" decoding="async" alt="Siddharth Saju" width="1254" height="1254"></div><h1>Hi, I’m Siddharth.</h1><p class="creator-name">Siddharth Saju</p><p class="creator-detail">First-year student · University of Birmingham</p><blockquote>“Hope you liked my website. I’d been searching for a website to do this, and ended up making one myself.”</blockquote><span class="creator-signature">Happy studying,<br>Siddharth</span></div></section>`;
   $("#about-back").onclick = () =>
     navigate(beforeAbout === "about" ? "home" : beforeAbout);
 }
@@ -917,6 +943,7 @@ setupAccounts({
   enterDashboard: () => {
     if (state.view !== "dashboard") beforeDashboard = state.view;
     state.view = "dashboard";
+    document.title = "Your progress | Honey Scholar";
   },
   back: () =>
     navigate(beforeDashboard === "dashboard" ? "home" : beforeDashboard),
@@ -933,5 +960,26 @@ setupAccounts({
     reset();
   },
 });
+const menu = $("#menu-toggle");
+const nav = $("#main-nav");
+function closeMenu() {
+  menu.setAttribute("aria-expanded", "false");
+  nav.classList.remove("is-open");
+}
+menu.onclick = () => {
+  const open = menu.getAttribute("aria-expanded") !== "true";
+  menu.setAttribute("aria-expanded", String(open));
+  nav.classList.toggle("is-open", open);
+};
+nav.addEventListener("click", (e) => {
+  if (e.target.closest("button, a")) closeMenu();
+});
+document.addEventListener("keydown", (e) => {
+  if (e.key === "Escape" && menu.getAttribute("aria-expanded") === "true") {
+    closeMenu();
+    menu.focus();
+  }
+});
+$("#copyright-year").textContent = new Date().getFullYear();
 setInterval(updateTimer, 500);
 render();
