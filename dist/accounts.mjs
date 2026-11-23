@@ -23,8 +23,8 @@ function message(s) {
   $("#account-message") && ($("#account-message").textContent = s);
 }
 async function init() {
-  if (auth) return auth;
   if (loading) return loading;
+  if (auth) return auth;
   loading = (async () => {
     const r = await fetch("/api/config");
     config = await r.json();
@@ -38,7 +38,7 @@ async function init() {
     ]);
     sdk = lib;
     auth = sdk.getAuth(initializeApp(config.firebase));
-    await sdk.setPersistence(auth, sdk.browserSessionPersistence);
+    await sdk.setPersistence(auth, sdk.browserLocalPersistence);
     await auth.authStateReady();
     return auth;
   })();
@@ -46,6 +46,7 @@ async function init() {
     return await loading;
   } catch (e) {
     loading = null;
+    auth = null;
     throw e;
   }
 }
@@ -100,7 +101,7 @@ export function setupAccounts(callbacks) {
 }
 export function showPrivacy() {
   modal(
-    `<h2>Your study data.</h2><p>No account is needed to study. Guest worksheets stay in your browser. We do not upload your original PDFs.</p><p>If you sign in, Google Firebase handles authentication. Honey Scholar stores your email, account dates and favourite topics. Only tests you choose to save are stored in Cloudflare, including their questions, answers, progress and scores.</p><p>The admin dashboard shows account emails, join dates, last account activity and overall usage counts. It does not show private tests or individual scores. The site owner and hosting providers can technically access stored data to operate the service.</p><p>No advertising trackers or Google Analytics are installed. Hosting and sign-in providers may retain security logs. You can export your saved data or delete your account in My progress. Deleted data may remain in provider backups for their retention period.</p><div class="actions"><button class="btn" id="modal-close">Close</button></div>`,
+    `<h2>Your study data.</h2><p>No account is needed to study. Guest worksheets stay in your browser. We do not upload your original PDFs.</p><p>If you sign in, Google Firebase handles authentication. You stay signed in on this browser until you sign out or clear its site data. Sign out when using a shared device. Honey Scholar stores your email, account dates and favourite topics. Only tests you choose to save are stored in Cloudflare, including their questions, answers, progress and scores.</p><p>The admin dashboard shows account emails, join dates, last account activity and overall usage counts. It does not show private tests or individual scores. The site owner and hosting providers can technically access stored data to operate the service.</p><p>No advertising trackers or Google Analytics are installed. Hosting and sign-in providers may retain security logs. You can export your saved data or delete your account in My progress. Deleted data may remain in provider backups for their retention period.</p><div class="actions"><button class="btn" id="modal-close">Close</button></div>`,
   );
 }
 export async function openAccount(after) {
@@ -392,6 +393,7 @@ function deleteAccount() {
 async function admin(offset = 0) {
   try {
     const data = await api("/admin?offset=" + offset);
+    bridge.transition("admin");
     $("#app").innerHTML =
       `<section class="workspace account-page"><div class="page-heading"><div><h1>Admin overview.</h1><p>Only the information needed to run Honey Scholar.</p></div><button class="text-btn" id="admin-back">My dashboard</button></div><div class="stat-row"><div><strong>${data.totals.accounts}</strong><span>Accounts</span></div><div><strong>${data.totals.active || 0}</strong><span>Active in 30 days</span></div><div><strong>${data.totals.saved}</strong><span>Saved attempts</span></div><div><strong>${data.totals.completed || 0}</strong><span>Completed initial tests</span></div></div><h2>Accounts.</h2><p class="tiny">Emails are for account support. Private test content, topics and individual scores are not included.</p><div class="table-scroll"><table><thead><tr><th>Email</th><th>Joined</th><th>Last account activity</th></tr></thead><tbody>${data.members.map((m) => `<tr><td>${esc(m.email)}</td><td>${date(m.created_at)}</td><td>${date(m.last_seen)}</td></tr>`).join("")}</tbody></table></div><div class="actions"><button id="admin-prev" class="btn secondary small" ${offset ? "" : "disabled"}>Previous</button><button id="admin-next" class="btn secondary small" ${offset + 50 >= data.totals.accounts ? "disabled" : ""}>Next</button></div></section>`;
     $("#admin-back").onclick = dashboard;

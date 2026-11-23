@@ -124,9 +124,7 @@ let beforeDashboard = "home";
 let beforeAbout = "home";
 $("#about-link").onclick = () => {
   beforeAbout = state.view;
-  state.view = "about";
-  render();
-  window.scrollTo(0, 0);
+  navigate("about");
 };
 $("#brand").onclick = (e) => {
   e.preventDefault();
@@ -137,7 +135,24 @@ $("#how-link").onclick = () =>
   showModal(
     `<div class="eyebrow">A small guide</div><h2 style="margin-top:14px">Good practice, without the fuss.</h2><ol class="instructions"><li>Choose a text-based PDF with numbered questions and lettered options.</li><li>Use its answer pages, upload a separate answer PDF, or add answers yourself.</li><li>Check the extracted questions and answers before starting.</li><li>Submit each answer to reveal the key. Submitted answers are locked for this attempt.</li></ol><div class="actions"><button id="modal-close" class="btn">Rather splendid</button></div>`,
   );
+let lastRenderedView;
+let pageAnimation;
+function animatePage(view) {
+  const changed = lastRenderedView !== undefined && lastRenderedView !== view;
+  lastRenderedView = view;
+  if (!changed) return;
+  pageAnimation?.cancel();
+  if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) return;
+  pageAnimation = app.animate(
+    [
+      { opacity: 0, transform: "translateY(8px)" },
+      { opacity: 1, transform: "translateY(0)" },
+    ],
+    { duration: 220, easing: "cubic-bezier(0.2, 0.7, 0.2, 1)" },
+  );
+}
 function render() {
+  animatePage(state.view);
   const titles = {
     home: "PDF worksheet practice",
     editor: "Check your worksheet",
@@ -565,10 +580,26 @@ function startQuiz() {
     };
   } else start();
 }
+let previousQuestion;
 function quiz() {
+  const nextQuestion = `${state.all}:${state.index}`;
+  const changedQuestion = previousQuestion !== undefined && previousQuestion !== nextQuestion;
+  const previousIndex = Number(previousQuestion?.split(":")[1] || 0);
+  previousQuestion = nextQuestion;
   const n = state.questions.length,
     done = Object.values(state.submitted).filter(Boolean).length;
   app.innerHTML = `<div class="quiz-shell"><div class="quiz-top"><div><h2 style="margin-top:10px">${esc(state.title)}</h2></div><div class="actions">${state.deadline ? '<span class="timer-display" role="timer" aria-label="Time remaining"><span aria-hidden="true">◷</span> <span id="time-left"></span></span>' : ""}<button class="btn secondary small" id="toggle-all">${state.all ? "◫ One at a time" : "▦ All questions"}</button></div></div><div class="progress-label"><span>${done} OF ${n} ANSWERS SUBMITTED</span><span>${Math.round((done / n) * 100)}% THROUGH</span></div><div class="progress-track"><span style="width:${(done / n) * 100}%"></span></div>${state.all ? state.questions.map((q, i) => questionCard(q, i)).join("") : questionCard(state.questions[state.index], state.index)}<div class="quiz-nav"><div class="question-grid" aria-label="Jump to question">${state.questions.map((q, i) => `<button class="q-dot ${state.submitted[q.id] ? "done" : ""} ${i === state.index && !state.all ? "current" : ""}" data-jump="${i}" aria-label="Question ${i + 1}${state.submitted[q.id] ? ", submitted" : ""}">${i + 1}</button>`).join("")}</div><div class="actions">${!state.all ? `<button class="btn secondary small" id="prev" ${state.index === 0 ? "disabled" : ""}>← Previous</button><button class="btn secondary small" id="next" ${state.index === n - 1 ? "disabled" : ""}>Next</button>` : ""}<button class="btn secondary small" id="save-progress">Save progress</button><button class="btn small" id="finish">Finish & see score</button></div></div><p class="wide-note">Submitted answers are locked. Retakes are practice only; your initial score stays unchanged.</p></div>`;
+  if (changedQuestion && !window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+    const direction = state.index < previousIndex ? -1 : 1;
+    app.querySelectorAll(".question").forEach((card, index) => {
+      card.animate(
+        [{ opacity: 0, transform: `translateX(${direction * 18}px)` },
+         { opacity: 1, transform: "translateX(0)" }],
+        { duration: 280, delay: Math.min(index * 25, 125), fill: "backwards",
+          easing: "cubic-bezier(0.2, 0.7, 0.2, 1)" },
+      );
+    });
+  }
   $("#toggle-all").onclick = () => {
     state.all = !state.all;
     quiz();
@@ -936,6 +967,7 @@ function about() {
     navigate(beforeAbout === "about" ? "home" : beforeAbout);
 }
 setupAccounts({
+  transition: animatePage,
   getState: () => state,
   persist: save,
   toast,
@@ -943,6 +975,7 @@ setupAccounts({
   enterDashboard: () => {
     if (state.view !== "dashboard") beforeDashboard = state.view;
     state.view = "dashboard";
+    animatePage("dashboard");
     document.title = "Your progress | Honey Scholar";
   },
   back: () =>

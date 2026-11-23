@@ -1476,3 +1476,62 @@ footer a {
     flex-basis: 100%;
   }
 }
+
+/* Consistent motion: controls respond immediately; larger surfaces ease in. */
+@keyframes surface-enter {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@media (prefers-reduced-motion: no-preference) {
+  button, a, summary, .choice, .letter, .drop {
+    transition: transform 160ms ease-out, background-color 180ms ease-out,
+      color 180ms ease-out, border-color 180ms ease-out,
+      box-shadow 180ms ease-out, opacity 180ms ease-out;
+  }
+  button:not(:disabled):active, a:active, summary:active {
+    transform: scale(0.97);
+  }
+  button:disabled { transition: opacity 180ms ease-out; }
+  main { animation: surface-enter 280ms ease-out; }
+  .explanation, .notice, .key-options { animation: surface-enter 220ms ease-out; }
+  dialog {
+    opacity: 0;
+    transform: translateY(12px) scale(0.985);
+    transition: opacity 220ms ease, transform 220ms ease,
+      display 220ms allow-discrete, overlay 220ms allow-discrete;
+  }
+  dialog[open] { opacity: 1; transform: translateY(0) scale(1); }
+  dialog::backdrop {
+    background-color: #26292400;
+    transition: background-color 220ms ease, display 220ms allow-discrete,
+      overlay 220ms allow-discrete;
+  }
+  dialog[open]::backdrop { background-color: #26292480; }
+  @starting-style {
+    dialog[open] { opacity: 0; transform: translateY(12px) scale(0.985); }
+    dialog[open]::backdrop { background-color: #26292400; }
+  }
+  @view-transition { navigation: auto; }
+  ::view-transition-old(root), ::view-transition-new(root) {
+    animation-duration: 220ms;
+    animation-timing-function: ease-in-out;
+  }
+}
+@media (hover: hover) and (prefers-reduced-motion: no-preference) {
+  button:not(:disabled):not(:active):hover, a.brand:not(:active):hover, summary:not(:active):hover {
+    transform: translateY(-2px);
+  }
+  .choice:not(:has(input:disabled)):hover { transform: translateX(3px); }
+}
+@media (max-width: 700px) and (prefers-reduced-motion: no-preference) {
+  #main-nav {
+    opacity: 0;
+    transform: translateY(-8px);
+    transition: opacity 220ms ease, transform 220ms ease,
+      display 220ms allow-discrete;
+  }
+  #main-nav.is-open { opacity: 1; transform: translateY(0); }
+  @starting-style {
+    #main-nav.is-open { opacity: 0; transform: translateY(-8px); }
+  }
+}
